@@ -3,17 +3,17 @@
         <h2 class="font-moul text-xl font-bold text-gray-900 sm:text-3xl">
             {{ $t('Contact Us') }}
         </h2>
-        <p class="text-gray-900 mb-8">We’d love to hear from you! Please complete the form below to get in touch.</p>
+        <p class="text-gray-900 mb-8">We'd love to hear from you! Please complete the form below to get in touch.</p>
         <Form :validation-schema="validationSchema" @submit="handleSubmit" class="space-y-4">
             <!-- Name Field -->
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">
                     {{ $t('name') }}
                 </label>
-                <Field name="name" type="text" v-model="form.name"
+                <Field name="Name" type="text" v-model="form.name"
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     :placeholder="$t('Enter your name') " />
-                <ErrorMessage name="name" class="text-red-600 text-sm mt-1" />
+                <ErrorMessage name="Name" class="text-red-600 text-sm mt-1" />
             </div>
 
             <!-- Email Field -->
@@ -21,10 +21,10 @@
                 <label class="block mb-1 text-sm font-medium text-gray-700">
                     {{ $t('email') }}
                 </label>
-                <Field name="email" type="email" v-model="form.email"
+                <Field name="Email" type="email" v-model="form.email"
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     :placeholder="$t('Enter your email') "/>
-                <ErrorMessage name="email" class="text-red-600 text-sm mt-1" />
+                <ErrorMessage name="Email" class="text-red-600 text-sm mt-1" />
             </div>
 
             <!-- Message Field -->
@@ -32,10 +32,10 @@
                 <label class="block text-sm font-medium text-gray-900 mb-2">
                     {{ $t('message') }}
                 </label>
-                <Field as="textarea" name="message" v-model="form.message" rows="5"
+                <Field as="textarea" name="Message" v-model="form.message" rows="5"
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     :placeholder="$t('Enter your message') " />
-                <ErrorMessage name="message" class="text-red-600 text-sm mt-1" />
+                <ErrorMessage name="Message" class="text-red-600 text-sm mt-1" />
             </div>
 
             <!-- Submit Button -->
