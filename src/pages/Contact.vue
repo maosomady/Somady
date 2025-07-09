@@ -3,7 +3,7 @@
         <h2 class="font-moul text-xl font-bold text-gray-900 sm:text-3xl">
             {{ $t('Contact Us') }}
         </h2>
-        <p class="text-gray-900 mb-8">We'd love to hear from you. Please fill out the form below.</p>
+        <p class="text-gray-900 mb-8">We’d love to hear from you! Please complete the form below to get in touch.</p>
         <Form :validation-schema="validationSchema" @submit="handleSubmit" class="space-y-4">
             <!-- Name Field -->
             <div>
