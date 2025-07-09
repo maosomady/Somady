@@ -40,7 +40,7 @@
 
             <!-- Submit Button -->
             <button
-          type="submit"
+          type="Submit"
           :disabled="isLoading"
           class="w-full py-2 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition duration-200 flex items-center justify-center"
         >
