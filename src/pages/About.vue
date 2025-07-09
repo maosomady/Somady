@@ -5,10 +5,7 @@
       <div class="container mx-auto px-6">
         <h1 class="text-4xl lg:text-5xl font-bold mb-2">About Me</h1>
         <p class="text-lg lg:text-xl text-indigo-200">
-            I am a student at the Cambodia Academy of Digital Technology (CADT) 
-            with a strong passion for building beautiful and functional web applications. 
-            I enjoy learning new technologies and solving complex problems. 
-            My goal is to become a skilled full-stack developer.        
+           I am currently a student at the Cambodia Academy of Digital Technology (CADT), with a strong passion for creating visually appealing and highly functional web applications. I am enthusiastic about learning new technologies and enjoy tackling complex challenges. My objective is to grow into a proficient full-stack developer, capable of delivering innovative and effective digital solutions.      
         </p>
       </div>
     </header>

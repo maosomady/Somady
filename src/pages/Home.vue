@@ -4,9 +4,9 @@
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center text-center bg-cover bg-center">
       <div class="bg-white bg-opacity-75 p-10 rounded-xl shadow-lg">
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Hello, I'm Mao Somady.</h1>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Hello, I'm Somady.</h1>
         <p class="text-xl lg:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
-          A passionate web developer based in Cambodia.
+          Welcome 2 my page.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <router-link to="/about" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-transform transform hover:scale-105 duration-300 ease-in-out">
