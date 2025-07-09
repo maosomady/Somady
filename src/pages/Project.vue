@@ -12,13 +12,13 @@
             </header>
 
             <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <li v-for="(project, index) in projects" :key="index">
+                <li v-for="project in projects" :key="project.id">
                     <router-link :to="`project/${project.name}`"
                         class="block rounded-md border border-gray-300 p-4 shadow-sm sm:p-6">
                         <div class="sm:flex sm:justify-between sm:gap-4 lg:gap-6">
                             <div class="sm:order-last sm:shrink-0">
                                 <img alt=""
-                                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+                                    src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
                                     class="size-16 rounded-full object-cover sm:size-[72px]" />
                             </div>
 
@@ -27,7 +27,7 @@
                                     {{ project.name }}
                                 </h3>
 
-                                <p class="mt-1 text-sm text-gray-700">By John Doe</p>
+                                <p class="mt-1 text-sm text-gray-700">Mao Somady</p>
 
                                 <p class="mt-4 line-clamp-2 text-sm text-pretty text-gray-700">
                                     {{ project.description }}
@@ -75,7 +75,7 @@
 import axios from 'axios';
 export default {
     async mounted() {
-        const response = await axios.get('https://api.github.com/users/KimangKhenng/repos?page=1&per_page=10', {
+        const response = await axios.get('https://api.github.com/users/maosomady/repos?page=1&per_page=10', {
             headers: {
                 'Authorization': `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
             }

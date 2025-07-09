@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piseth's Portfolio</title>
+    
+    <!-- 1. Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 2. Vue.js Core -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- 3. Vue Router for routing -->
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
+
+    <!-- 4. Vue I18n for internationalization -->
+    <script src="https://unpkg.com/vue-i18n@9/dist/vue-i18n.global.js"></script>
+
+    <style>
+        /* Simple transition for router view */
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.3s ease;
+        }
+        .fade-enter-from, .fade-leave-to {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <!-- This is where our Vue app will be mounted -->
+    <div id="app" class="flex flex-col min-h-screen"></div>
+
+    <script type="module">
+        const { createApp, ref, computed } = Vue;
+        const { createRouter, createWebHashHistory } = VueRouter;
+        const { createI18n } = VueI18n;
+
+        //=========== 1. INTERNATIONALIZATION (i18n) SETUP ===========
+        const messages = {
+            en: {
+                nav: {
+                    home: 'Home',
+                    about: 'About',
+                    projects: 'Projects',
+                    contact: 'Contact',
+                },
+                home: {
+                    greeting: "Hi, I'm Piseth",
+                    intro: "A passionate web developer based in Cambodia.",
+                    viewProjects: "View My Projects"
+                },
+                about: {
+                    title: "About Me",
+                    bio: "I am a student at the Cambodia Academy of Digital Technology (CADT) with a strong passion for building beautiful and functional web applications. I enjoy learning new technologies and solving complex problems. My goal is to become a skilled full-stack developer.",
+                    skills: "My Skills"
+                },
+                projects: {
+                    title: "My Projects"
+                },
+                contact: {
+                    title: "Get In Touch",
+                    name: "Name",
+                    email: "Email",
+                    message: "Message",
+                    submit: "Send Message",
+                    success: "Thank you! Your message has been sent.",
+                    error: "Please fill out all fields.",
+                    invalidEmail: "Please enter a valid email address."
+                },
+                footer: {
+                    text: "© 2024 Piseth. All rights reserved."
+                },
+                notFound: {
+                    title: "404 - Page Not Found",
+                    message: "The page you are looking for does not exist.",
+                    goHome: "Go Back Home"
+                }
+            },
+            km: {
+                nav: {
+                    home: 'ទំព័រដើម',
+                    about: 'អំពីខ្ញុំ',
+                    projects: 'គម្រោង',
+                    contact: 'ទំនាក់ទំនង',
+                },
+                home: {
+                    greeting: "សួស្តី! ខ្ញុំបាទ ពិសិដ្ឋ",
+                    intro: "អ្នកអភិវឌ្ឍន៍វិបសាយម្នាក់នៅប្រទេសកម្ពុជា។",
+                    viewProjects: "មើលគម្រោងរបស់ខ្ញុំ"
+                },
+                about: {
+                    title: "អំពីខ្ញុំ",
+                    bio: "ខ្ញុំជានិស្សិតនៅសាលាបណ្ឌិតសភានិងបច្ចេកវិទ្យាឌីជីថលកម្ពុជា (CADT) ដែលមាន​ شغف​ ក្នុងការបង្កើតកម្មវិធីវិបសាយដែលស្អាតនិងមានមុខងារល្អ។ ខ្ញុំចូលចិត្តរៀនបច្ចេកវិទ្យាថ្មីៗនិងដោះស្រាយបញ្ហាស្មុគស្មាញ។ គោលបំណងរបស់ខ្ញុំគឺក្លាយជាអ្នកអភិវឌ្ឍន៍ Full-Stack ដ៏ជំនាញ។",
+                    skills: "ជំនាញរបស់ខ្ញុំ"
+                },
+                projects: {
+                    title: "គម្រោងរបស់ខ្ញុំ"
+                },
+                contact: {
+                    title: "ទំនាក់ទំនងមកខ្ញុំ",
+                    name: "ឈ្មោះ",
+                    email: "អ៊ីមែល",
+                    message: "សារ",
+                    submit: "ផ្ញើសារ",
+                    success: "សូមអរគុណ! សាររបស់អ្នកត្រូវបានផ្ញើ។",
+                    error: "សូមបំពេញគ្រប់ប្រអប់។",
+                    invalidEmail: "សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលត្រឹមត្រូវ។"
+                },
+                footer: {
+                    text: "© ២០២៤ ពិសិដ្ឋ។ រក្សាសិទ្ធិគ្រប់យ៉ាង។"
+                },
+                notFound: {
+                    title: "៤០៤ - រកមិនឃើញទំព័រ",
+                    message: "ទំព័រដែលអ្នកកំពុងស្វែងរកមិនមានទេ។",
+                    goHome: "ត្រឡប់ទៅទំព័រដើម"
+                }
+            }
+        };
+
+        const i18n = createI18n({
+            legacy: false, // Use Composition API
+            locale: 'en', // Set default locale
+            fallbackLocale: 'en',
+            messages,
+        });
+
+        //=========== 2. VUE COMPONENTS ===========
+
+        //--- Header Component ---
+        const Header = {
+            setup() {
+                const { locale } = i18n.global;
+                function switchLanguage(lang) {
+                    locale.value = lang;
+                }
+                return { switchLanguage, currentLocale: locale };
+            },
+            template: `
+                <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+                    <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+                        <router-link to="/" class="text-xl font-bold text-blue-600 dark:text-blue-400">Piseth</router-link>
+                        <div class="flex items-center space-x-4">
+                            <router-link to="/" class="px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">{{ $t('nav.home') }}</router-link>
+                            <router-link to="/about" class="px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">{{ $t('nav.about') }}</router-link>
+                            <router-link to="/projects" class="px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">{{ $t('nav.projects') }}</router-link>
+                            <router-link to="/contact" class="px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">{{ $t('nav.contact') }}</router-link>
+                            <div class="flex border-l border-gray-300 dark:border-gray-600 ml-2 pl-4">
+                                <button @click="switchLanguage('en')" :class="{'font-bold text-blue-500': currentLocale === 'en'}" class="px-2 py-1 rounded">EN</button>
+                                <button @click="switchLanguage('km')" :class="{'font-bold text-blue-500': currentLocale === 'km'}" class="px-2 py-1 rounded">KH</button>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+            `
+        };
+
+        //--- Footer Component ---
+        const Footer = {
+            template: `
+                <footer class="bg-white dark:bg-gray-800 mt-auto py-4 text-center text-gray-500 dark:text-gray-400">
+                    <p>{{ $t('footer.text') }}</p>
+                </footer>
+            `
+        };
+
+        //--- Home Page Component ---
+        const Home = {
+            template: `
+                <main class="container mx-auto px-6 py-16 text-center flex-grow flex items-center justify-center">
+                    <div>
+                        <h1 class="text-4xl md:text-6xl font-extrabold mb-4">{{ $t('home.greeting') }}</h1>
+                        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">{{ $t('home.intro') }}</p>
+                        <router-link to="/projects" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                            {{ $t('home.viewProjects') }}
+                        </router-link>
+                    </div>
+                </main>
+            `
+        };
+
+        //--- About Page Component ---
+        const About = {
+            data() {
+                return {
+                    skills: ['HTML', 'CSS', 'JavaScript', 'Vue.js', 'Node.js', 'Tailwind CSS', 'Git']
+                }
+            },
+            template: `
+                <main class="container mx-auto px-6 py-10 flex-grow">
+                    <h2 class="text-3xl font-bold text-center mb-8">{{ $t('about.title') }}</h2>
+                    <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+                        <p class="text-lg mb-6 leading-relaxed">{{ $t('about.bio') }}</p>
+                        <h3 class="text-2xl font-semibold mb-4">{{ $t('about.skills') }}</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <!-- v-for directive to loop through skills -->
+                            <span v-for="skill in skills" :key="skill" class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm font-medium px-3 py-1 rounded-full">
+                                {{ skill }}
+                            </span>
+                        </div>
+                    </div>
+                </main>
+            `
+        };
+
+        //--- Projects Page Component ---
+        const Projects = {
+            data() {
+                return {
+                    // Sample project data. In a real app, this could be fetched from a JSON file or API.
+                    projects: [
+                        { id: 1, title: 'E-commerce Website', description: 'A front-end prototype for an online store, built with Vue.js and Tailwind CSS.', image: 'https://placehold.co/600x400/3498db/ffffff?text=E-commerce', link: '#' },
+                        { id: 2, title: 'Task Management App', description: 'A simple to-do list application to manage daily tasks, featuring create, read, and delete functionalities.', image: 'https://placehold.co/600x400/2ecc71/ffffff?text=Task+App', link: '#' },
+                        { id: 3, title: 'Weather Dashboard', description: 'A web app that fetches and displays weather data from a third-party API based on user location.', image: 'https://placehold.co/600x400/f1c40f/ffffff?text=Weather+App', link: '#' }
+                    ]
+                }
+            },
+            template: `
+                <main class="container mx-auto px-6 py-10 flex-grow">
+                    <h2 class="text-3xl font-bold text-center mb-8">{{ $t('projects.title') }}</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- v-for directive to loop through projects -->
+                        <div v-for="project in projects" :key="project.id" class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                            <!-- Attribute binding with :src -->
+                            <img :src="project.image" alt="Project Image" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">{{ project.title }}</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">{{ project.description }}</p>
+                                <!-- Attribute binding with :href -->
+                                <a :href="project.link" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">View Project &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            `
+        };
+
+        //--- Contact Page Component ---
+        const Contact = {
+            data() {
+                return {
+                    form: {
+                        name: '',
+                        email: '',
+                        message: ''
+                    },
+                    formStatus: null, // can be 'success', 'error', or 'invalidEmail'
+                }
+            },
+            methods: {
+                validateEmail(email) {
+                    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(String(email).toLowerCase());
+                },
+                handleSubmit() {
+                    // v-if checks for validation
+                    if (!this.form.name || !this.form.email || !this.form.message) {
+                        this.formStatus = 'error';
+                    } else if (!this.validateEmail(this.form.email)) {
+                        this.formStatus = 'invalidEmail';
+                    } else {
+                        this.formStatus = 'success';
+                        // Here you would typically send the form data to a server
+                        console.log('Form Submitted:', this.form);
+                        // Reset form
+                        this.form.name = '';
+                        this.form.email = '';
+                        this.form.message = '';
+                    }
+                }
+            },
+            template: `
+                <main class="container mx-auto px-6 py-10 flex-grow">
+                    <h2 class="text-3xl font-bold text-center mb-8">{{ $t('contact.title') }}</h2>
+                    <div class="max-w-lg mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+                        <form @submit.prevent="handleSubmit">
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">{{ $t('contact.name') }}</label>
+                                <!-- v-model directive for two-way data binding -->
+                                <input type="text" id="name" v-model="form.name" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">{{ $t('contact.email') }}</label>
+                                <input type="email" id="email" v-model="form.email" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="mb-6">
+                                <label for="message" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">{{ $t('contact.message') }}</label>
+                                <textarea id="message" v-model="form.message" rows="5" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                                    {{ $t('contact.submit') }}
+                                </button>
+                            </div>
+                        </form>
+                        <!-- v-if/v-else for conditional messages -->
+                        <div v-if="formStatus === 'success'" class="mt-4 text-center p-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-lg">
+                            {{ $t('contact.success') }}
+                        </div>
+                        <div v-else-if="formStatus === 'error'" class="mt-4 text-center p-3 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
+                            {{ $t('contact.error') }}
+                        </div>
+                         <div v-else-if="formStatus === 'invalidEmail'" class="mt-4 text-center p-3 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-lg">
+                            {{ $t('contact.invalidEmail') }}
+                        </div>
+                    </div>
+                </main>
+            `
+        };
+
+        //--- Not Found Page Component ---
+        const NotFound = {
+            template: `
+                <main class="container mx-auto px-6 py-16 text-center flex-grow flex items-center justify-center">
+                    <div>
+                        <h1 class="text-6xl font-extrabold text-red-500 mb-4">404</h1>
+                        <h2 class="text-3xl font-bold mb-4">{{ $t('notFound.title') }}</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">{{ $t('notFound.message') }}</p>
+                        <router-link to="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                            {{ $t('notFound.goHome') }}
+                        </router-link>
+                    </div>
+                </main>
+            `
+        };
+
+        //=========== 3. VUE ROUTER SETUP ===========
+        const routes = [
+            { path: '/', component: Home },
+            { path: '/about', component: About },
+            { path: '/projects', component: Projects },
+            { path: '/contact', component: Contact },
+            { path: '/:pathMatch(.*)*', component: NotFound } // Catch-all route for 404
+        ];
+
+        const router = createRouter({
+            history: createWebHashHistory(), // Use hash mode for simple deployment
+            routes,
+        });
+        
+        // Scroll to top on route change
+        router.afterEach((to, from) => {
+            window.scrollTo(0, 0);
+        });
+
+        //=========== 4. ROOT VUE APP INSTANCE ===========
+        const App = {
+            components: {
+                'app-header': Header,
+                'app-footer': Footer
+            },
+            template: `
+                <app-header></app-header>
+                <router-view v-slot="{ Component }">
+                    <transition name="fade" mode="out-in">
+                        <component :is="Component" />
+                    </transition>
+                </router-view>
+                <app-footer></app-footer>
+            `
+        };
+
+        const app = createApp(App);
+        app.use(router); // Use the router
+        app.use(i18n);   // Use the i18n plugin
+        app.mount('#app'); // Mount the app to the #app div
+
+    </script>
+
+</body>
+</html>
