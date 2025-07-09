@@ -8,34 +8,34 @@
             <!-- Name Field -->
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">
-                    {{ $t('name') }}
+                    {{ $t('Name') }}
                 </label>
-                <Field name="Name" type="text" v-model="form.name"
+                <Field name="name" type="text" v-model="form.name"
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     :placeholder="$t('Enter your name') " />
-                <ErrorMessage name="Name" class="text-red-600 text-sm mt-1" />
+                <ErrorMessage name="name" class="text-red-600 text-sm mt-1" />
             </div>
 
             <!-- Email Field -->
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">
-                    {{ $t('email') }}
+                    {{ $t('Email') }}
                 </label>
-                <Field name="Email" type="email" v-model="form.email"
+                <Field name="email" type="email" v-model="form.email"
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     :placeholder="$t('Enter your email') "/>
-                <ErrorMessage name="Email" class="text-red-600 text-sm mt-1" />
+                <ErrorMessage name="email" class="text-red-600 text-sm mt-1" />
             </div>
 
             <!-- Message Field -->
             <div>
                 <label class="block text-sm font-medium text-gray-900 mb-2">
-                    {{ $t('message') }}
+                    {{ $t('Message') }}
                 </label>
-                <Field as="textarea" name="Message" v-model="form.message" rows="5"
+                <Field as="textarea" name="message" v-model="form.message" rows="5"
                     class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     :placeholder="$t('Enter your message') " />
-                <ErrorMessage name="Message" class="text-red-600 text-sm mt-1" />
+                <ErrorMessage name="message" class="text-red-600 text-sm mt-1" />
             </div>
 
             <!-- Submit Button -->
